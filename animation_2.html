@@ -194,6 +194,22 @@
             animate(-600);
         };
         /////test04
+
+
+        /////test05
+        for (var i = 0; i < buttons.length; i++) {
+            // 这里使用的是立即执行函数，
+            (function(i) {
+                buttons[i].onclick = function() {
+                    var clickIndex = parseInt(this.getAttribute('index'));
+                    var offset = 600 * (index - clickIndex);
+                    animate(offset);
+                    index = clickIndex;
+                    buttonsShow();
+                }
+            })(i)
+        }
+        /////test05
     }
 </script>
 </html>
