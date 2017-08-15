@@ -104,6 +104,10 @@
 </body>
 <script>
     window.onload = function() {
+
+        /////test03
+        var container = document.getElementById('container');
+        /////test03
         var list = document.getElementById('list');
         var prev = document.getElementById('prev');
         var next = document.getElementById('next');
@@ -140,6 +144,15 @@
         play();
 /////test02
 
+
+
+/////test03
+        function stop() {
+            clearInterval(timer);
+        }
+        container.onmouseover = stop;
+        container.onmouseout = play;
+////test03
     }
 </script>
 </html>
