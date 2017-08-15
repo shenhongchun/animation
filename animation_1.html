@@ -3,6 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <script src="tool.js"></script>
     <style>
         #content{
             position: absolute;
@@ -51,58 +52,20 @@
 </div>
 </body>
 <script>
-    //获取DOM节点
-    function getObj(id){
-        return document.getElementById(id);
-    }
-    //获取样式表样式
-    function getStyle(obj,attr){
-//        document.all为判断IE浏览器的条件
-        if(document.all){
-//            兼容IE8及以下版本
-            return parseInt(obj.currentStyle[attr]);
-        }else{
-//            兼容火狐和谷歌
-            return parseInt(getComputedStyle(obj,false)[attr]);
-        }
-    }
+
+
     //获取分享DOM节点
     var share =getObj("content");
     //绑定鼠标移入事件
     share.addEventListener("mouseover",function(){
-        moving();
+        moving(this,5,0);
     },true);
-    var timer=null;
-    function moving(){
-        clearInterval(timer1);
-        clearInterval(timer);
-        timer=setInterval(function(){
-            var left_val=getStyle(share,"left");
-            if(left_val<0){
-                left_val+=10;
-            }
-            share.style.left=left_val+"px";
-            console.log(111)
-        },17)
-    }
-
-
     share.addEventListener("mouseout",function(){
-        fade();
+        moving(this,-5,-150);
     },true);
-    var timer1=null;
-    function fade(){
-        clearInterval(timer);
-        clearInterval(timer1);
-        timer1=setInterval(function(){
-            var left_val=getStyle(share,"left");
-            if(left_val>-150){
-                left_val-=10;
-            }
-            share.style.left=left_val+"px";
-            console.log(222)
-        },17)
-    }
+
+
+
 
 
 </script>
