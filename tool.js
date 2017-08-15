@@ -17,8 +17,7 @@ function getStyle(obj,attr){
     }
 }
 function moving(obj,speed,terminal){
-    clearInterval(share.timer);
-    obj.timer=null;
+    clearInterval(obj.timer);
     obj.timer=setInterval(function(){
         var left_val=getStyle(share,"left");
         if(left_val<terminal){
