@@ -113,6 +113,15 @@
             //且style.left获取的是字符串，需要用parseInt()取整转化为数字。
             var newLeft = parseInt(list.style.left) + offset;
             list.style.left = newLeft + 'px';
+/////test01
+            if(newLeft<-3000){
+                list.style.left = -600 + 'px';
+            }
+            if(newLeft>-600){
+                list.style.left = -3000 + 'px';
+            }
+/////test01
+
         }
 
         prev.onclick = function() {
