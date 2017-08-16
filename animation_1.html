@@ -58,6 +58,7 @@
     var share =getObj("content");
     //绑定鼠标移入事件
     share.addEventListener("mouseover",function(){
+        console.log(this.timer);
         moving(this,5,0);
     },true);
     share.addEventListener("mouseout",function(){
