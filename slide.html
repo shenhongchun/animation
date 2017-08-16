@@ -110,8 +110,7 @@
          * 2.给prev、next、list绑定点击事件
          * 3.编写事假处理函数slide
          */
-        var timer=null;
-        var timer1=null;
+        var container=getObj("container");
         var prev=getObj("prev");
         var next=getObj("next");
         var buttons=document.getElementsByTagName("span");
@@ -123,7 +122,6 @@
         next.addEventListener('click',function(){
             slide(-600,-2400,"0px");
         });
-
         for(var i=0;i<buttons.length;i++){
             (function(n){
                 buttons[n].onclick=function(){
@@ -160,6 +158,18 @@
 //            console.log(num);
             list.style.left=num*(-600)+"px";
         }
+        var timer;
+        timer=setInterval(function(){
+            slide(600,0,"-2400px");
+        },2000);
+        container.addEventListener("mouseover",function(){
+            clearInterval(timer);
+        });
+        container.addEventListener("mouseout",function(){
+            timer=setInterval(function(){
+                slide(600,0,"-2400px");
+            },2000);
+        })
 
 
 
