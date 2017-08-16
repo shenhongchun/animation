@@ -16,7 +16,7 @@
             position: relative;
             width: 600px;
             height: 400px;
-            border: 3px solid #333;
+
             overflow: hidden;
         }
         #list {
@@ -48,6 +48,7 @@
             border-radius: 50%;
             background: #333;
             cursor: pointer;
+            font-size: 0;
         }
         #buttons .on {
             background: orangered;
@@ -85,81 +86,96 @@
 <body>
 <div id="container">
     <div id="list" style="left: 0">
-        <!--<img src="img1.jpg" alt="1" />-->
         <img src="img2.jpg" alt="1" />
         <img src="img3.jpg" alt="2" />
         <img src="img1.jpg" alt="3" />
         <img src="img2.jpg" alt="4" />
         <img src="img3.jpg" alt="5" />
-        <!--<img src="img1.jpg" alt="5" />-->
     </div>
     <div id="buttons">
-        <span class="on"></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+        <span class="on">1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
     </div>
     <a href="#" id="prev" class="arrow">&lt;</a>
     <a href="#" id="next" class="arrow">&gt;</a>
 </div>
 </body>
 <script>
-    window.onload = function() {
-        var common_idx;
-        //图片横向排列
-        var list = getObj('list');
-        //左边上一张按钮
-        var prev = getObj('prev');
-        //右边下一张按钮
-        var next = getObj('next');
-        var btn_idx;
+    window.onload=function(){
+        /***
+         * 1.获取所有DOM节点（prev、next、buttons、list）；
+         * 2.给prev、next、list绑定点击事件
+         * 3.编写事假处理函数slide
+         */
+        var timer=null;
+        var timer1=null;
+        var prev=getObj("prev");
+        var next=getObj("next");
         var buttons=document.getElementsByTagName("span");
-        function moving(speed,terminal,isLeft){
-//            if(isLeft){
-//                isLeft=0;
-//            }else{
-//                isLeft=-2400;
-//            }
+        var list=getObj("list");
+        //step01  end
+        prev.addEventListener('click',function(){
+            slide(600,0,"-2400px");
+        });
+        next.addEventListener('click',function(){
+            slide(-600,-2400,"0px");
+        });
 
-            isLeft=isLeft?0:-2400;
-            var left_val=parseInt(list.style.left);
-            if(left_val===terminal){
-                left_val=isLeft;
+        for(var i=0;i<buttons.length;i++){
+            (function(n){
+                buttons[n].onclick=function(){
+                    button_control(this,n);
+                }
+            })(i)
+        }
+        //step 02 end
+        function slide(speed,terminal,flag){
+            var left_value=parseInt(list.style.left);
+            if(left_value===terminal){
+                list.style.left=flag;
+                left_value=parseInt(list.style.left);
             }else{
-                left_val+=speed;
+                left_value+=speed;
+                list.style.left=left_value+"px";
             }
-
-            list.style.left=left_val+"px";
-            btn_idx=Math.ceil(Math.abs(left_val/(-601)));
-            console.log(btn_idx);
-
-
+            console.log(left_value);
+            //在修改class前，清空所有class；
             for(var i=0;i<buttons.length;i++){
                 buttons[i].setAttribute("class","");
             }
-            buttons[btn_idx].setAttribute("class","on")
+            //点击span修改class为“on”；
+            buttons[left_value/-600].setAttribute("class","on");
         }
-        setInterval(function(){
-            moving(-600,-2400,true);
-        },1500);
-        next.addEventListener("click",function(){
-            moving(-600,-2400,true);
-        });
-        prev.addEventListener("click",function(){
-            moving(600,0,false);
-        });
-        for(var i=0;i<buttons.length;i++){
-            (function(n){
-                buttons[i].onclick=function(){
-                    list.style.left=n*(-600)+"px";
-                    for(var i=0;i<buttons.length;i++){
-                        buttons[i].setAttribute("class","");
-                    }
-                    this.setAttribute("class","on");
-                }
-            })(i);
+        function button_control(that,num) {
+            //在修改class前，清空所有class；
+            for(var i=0;i<buttons.length;i++){
+                buttons[i].setAttribute("class","");
+            }
+            //点击span修改class为“on”；
+            that.setAttribute("class","on");
+            //控制图片移动到当前位置
+//            console.log(num);
+            list.style.left=num*(-600)+"px";
         }
-    }
+
+        
+        timer=setInterval(function(){
+            slide(-600,-2400,"0px");
+        },2000);
+
+        getObj("container").onmouseover=function(){
+            clearInterval(timer);
+        };
+        getObj("container").onmouseout=function(){
+            clearInterval(timer);
+            clearInterval(timer1);
+            timer1=setInterval(function(){
+                slide(-600,-2400,"0px");
+            },2000);
+        }
+    };
 </script>
 </html>
