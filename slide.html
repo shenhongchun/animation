@@ -161,21 +161,8 @@
             list.style.left=num*(-600)+"px";
         }
 
-        
-        timer=setInterval(function(){
-            slide(-600,-2400,"0px");
-        },2000);
 
-        getObj("container").onmouseover=function(){
-            clearInterval(timer);
-        };
-        getObj("container").onmouseout=function(){
-            clearInterval(timer);
-            clearInterval(timer1);
-            timer1=setInterval(function(){
-                slide(-600,-2400,"0px");
-            },2000);
-        }
+
     };
 </script>
 </html>

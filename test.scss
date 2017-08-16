@@ -1,0 +1,26 @@
+$color:red;
+
+#test{
+
+  background: $color;
+  width: 100px;
+  font:{
+    size: 12px;
+    weight: 300;
+  }
+  &:hover{
+    color: #ffffff;
+  }
+  @at-root
+  div{
+    width: 200px;
+    @at-root
+    a{
+      height: 300px;
+      @at-root
+      span{
+        background: #000;
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+#test {
+  background: red;
+  width: 100px;
+  font-size: 12px;
+  font-weight: 300; }
+  #test:hover {
+    color: #ffffff; }
+  div {
+    width: 200px; }
+    a {
+      height: 300px; }
+      span {
+        background: #000; }
+
+
+http://www.cnblogs.com/lwwen/p/5817476.html
+                                      http://www.w3cplus.com/css/css-specificity-things-you-should-know.html
+/*# sourceMappingURL=test.css.map */
