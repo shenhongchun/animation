@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+        }
+        body {
+            padding: 20px;
+        }
+        #container {
+            position: relative;
+            width: 600px;
+            height: 400px;
+
+            overflow: hidden;
+        }
+        #list {
+            position: absolute;
+            z-index: 1;
+            width: 4200px;
+            height: 400px;
+            transition:all .8s ease-in-out;
+        }
+        #list img {
+            float: left;
+            width: 600px;
+            height: 400px;
+        }
+        #buttons {
+            position: absolute;
+            left: 250px;
+            bottom: 20px;
+            z-index: 2;
+            height: 10px;
+            width: 100px;
+        }
+        #buttons span {
+            float: left;
+            margin-right: 5px;
+            width: 10px;
+            height: 10px;
+            border: 1px solid #fff;
+            border-radius: 50%;
+            background: #333;
+            cursor: pointer;
+            font-size: 0;
+        }
+        #buttons .on {
+            background: orangered;
+        }
+        .arrow {
+            position: absolute;
+            top: 180px;
+            z-index: 2;
+            display: none;
+            width: 40px;
+            height: 40px;
+            font-size: 36px;
+            font-weight: bold;
+            line-height: 39px;
+            text-align: center;
+            color: #fff;
+            background-color: RGBA(0, 0, 0, .3);
+            cursor: pointer;
+        }
+        .arrow:hover {
+            background-color: RGBA(0, 0, 0, .7);
+        }
+        #container:hover .arrow {
+            display: block;
+        }
+        #prev {
+            left: 20px;
+        }
+        #next {
+            right: 20px;
+        }
+    </style>
+    <script src="tool.js"></script>
+</head>
+<body>
+<div id="container">
+    <div id="list" style="left: 0">
+        <img src="img2.jpg" alt="1" />
+        <img src="img3.jpg" alt="2" />
+        <img src="img1.jpg" alt="3" />
+        <img src="img2.jpg" alt="4" />
+        <img src="img3.jpg" alt="5" />
+    </div>
+    <div id="buttons">
+        <span class="on">1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+    </div>
+    <a href="#" id="prev" class="arrow">&lt;</a>
+    <a href="#" id="next" class="arrow">&gt;</a>
+</div>
+</body>
+<script>
+    window.onload=function(){
+        /***
+         * 1.获取所有DOM节点（prev、next、buttons、list）；
+         * 2.给prev、next、list绑定点击事件
+         * 3.编写事假处理函数slide
+         */
+        var timer=null;
+        var timer1=null;
+        var prev=getObj("prev");
+        var next=getObj("next");
+        var buttons=document.getElementsByTagName("span");
+        var list=getObj("list");
+        //step01  end
+        prev.addEventListener('click',function(){
+            slide(600,0,"-2400px");
+        });
+        next.addEventListener('click',function(){
+            slide(-600,-2400,"0px");
+        });
+
+        for(var i=0;i<buttons.length;i++){
+            (function(n){
+                buttons[n].onclick=function(){
+                    button_control(this,n);
+                }
+            })(i)
+        }
+        //step 02 end
+        function slide(speed,terminal,flag){
+            var left_value=parseInt(list.style.left);
+            if(left_value===terminal){
+                list.style.left=flag;
+                left_value=parseInt(list.style.left);
+            }else{
+                left_value+=speed;
+                list.style.left=left_value+"px";
+            }
+            console.log(left_value);
+            //在修改class前，清空所有class；
+            for(var i=0;i<buttons.length;i++){
+                buttons[i].setAttribute("class","");
+            }
+            //点击span修改class为“on”；
+            buttons[left_value/-600].setAttribute("class","on");
+        }
+        function button_control(that,num) {
+            //在修改class前，清空所有class；
+            for(var i=0;i<buttons.length;i++){
+                buttons[i].setAttribute("class","");
+            }
+            //点击span修改class为“on”；
+            that.setAttribute("class","on");
+            //控制图片移动到当前位置
+//            console.log(num);
+            list.style.left=num*(-600)+"px";
+        }
+
+
+
+    };
+</script>
+</html>

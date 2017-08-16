@@ -24,6 +24,7 @@
             z-index: 1;
             width: 4200px;
             height: 400px;
+            transition:all .8s ease-in-out;
         }
         #list img {
             float: left;
@@ -79,31 +80,33 @@
             right: 20px;
         }
     </style>
+    <script src="tool.js"></script>
 </head>
 <body>
 <div id="container">
-    <div id="list" style="left: -600px;">
-        <img src="img1.jpg" alt="1" />
+    <div id="list" style="left: 0">
+        <!--<img src="img1.jpg" alt="1" />-->
         <img src="img2.jpg" alt="1" />
         <img src="img3.jpg" alt="2" />
         <img src="img1.jpg" alt="3" />
         <img src="img2.jpg" alt="4" />
         <img src="img3.jpg" alt="5" />
-        <img src="img1.jpg" alt="5" />
+        <!--<img src="img1.jpg" alt="5" />-->
     </div>
     <div id="buttons">
-        <span index="1" class="on"></span>
-        <span index="2"></span>
-        <span index="3"></span>
-        <span index="4"></span>
-        <span index="5"></span>
+        <span class="on"></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
-    <a href="javascript:void(0);" id="prev" class="arrow">&lt;</a>
-    <a href="javascript:void(0);" id="next" class="arrow">&gt;</a>
+    <a href="#" id="prev" class="arrow">&lt;</a>
+    <a href="#" id="next" class="arrow">&gt;</a>
 </div>
 </body>
 <script>
     window.onload = function() {
+<<<<<<< HEAD
 
         /////test03
         var container = document.getElementById('container');
@@ -210,6 +213,62 @@
             })(i)
         }
         /////test05
+=======
+        var common_idx;
+        //图片横向排列
+        var list = getObj('list');
+        //左边上一张按钮
+        var prev = getObj('prev');
+        //右边下一张按钮
+        var next = getObj('next');
+        var btn_idx;
+        var buttons=document.getElementsByTagName("span");
+        function moving(speed,terminal,isLeft){
+//            if(isLeft){
+//                isLeft=0;
+//            }else{
+//                isLeft=-2400;
+//            }
+
+            isLeft=isLeft?0:-2400;
+            var left_val=parseInt(list.style.left);
+            if(left_val===terminal){
+                left_val=isLeft;
+            }else{
+                left_val+=speed;
+            }
+
+            list.style.left=left_val+"px";
+            btn_idx=Math.ceil(Math.abs(left_val/(-601)));
+            console.log(btn_idx);
+
+
+            for(var i=0;i<buttons.length;i++){
+                buttons[i].setAttribute("class","");
+            }
+            buttons[btn_idx].setAttribute("class","on")
+        }
+        setInterval(function(){
+            moving(-600,-2400,true);
+        },1500);
+        next.addEventListener("click",function(){
+            moving(-600,-2400,true);
+        });
+        prev.addEventListener("click",function(){
+            moving(600,0,false);
+        });
+        for(var i=0;i<buttons.length;i++){
+            (function(n){
+                buttons[i].onclick=function(){
+                    list.style.left=n*(-600)+"px";
+                    for(var i=0;i<buttons.length;i++){
+                        buttons[i].setAttribute("class","");
+                    }
+                    this.setAttribute("class","on");
+                }
+            })(i);
+        }
+>>>>>>> 61612de0d025a8f41fd60bbf8ce96ec984bf668c
     }
 </script>
 </html>
